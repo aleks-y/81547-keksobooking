@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Устинов](https://up.htmlacademy.ru/javascript/15/user/81547).
-* Наставник: `Неизвестно`.
+* Наставник: [Юрий Катков](https://htmlacademy.ru/profile/id473867).
 
 ---
 
