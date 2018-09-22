@@ -63,3 +63,16 @@ var MAP_PIN_POSITION_Y_RANGE = {
   min: 130,
   max: 630
 };
+
+var map = document.querySelector('.map');
+var mapPinsContainer = map.querySelector('.map__pins');
+var mapPinMain = mapPinsContainer.querySelector('.map__pin--main');
+
+var getXRange = function () {
+  var mapPinPositionXRange = {};
+
+  return mapPinPositionXRange = {
+    min: Math.round(mapPinMain.offsetWidth / 2),
+    max: Math.round(mapPinsContainer.offsetWidth + mapPinMain.offsetWidth / 2)
+  };
+};
