@@ -76,3 +76,24 @@ var getXRange = function () {
     max: Math.round(mapPinsContainer.offsetWidth + mapPinMain.offsetWidth / 2)
   };
 };
+
+var getRandomInt = function (min, max) {
+  return Math.floor(Math.random() * (max + 1 - min)) + min;
+};
+
+var getOffersAvatars = function (offerQuantity) {
+  var offersAvatars = [];
+  var offerAvatarIndex;
+  var offerAvatarImage = '';
+
+  while (offersAvatars.length < offerQuantity) {
+    offerAvatarIndex = getRandomInt(MIN_OFFER_QUANTITY, offerQuantity);
+    offerAvatarImage = 'img/avatars/user0' + offerAvatarIndex + '.png';
+
+    if (offersAvatars.indexOf(offerAvatarImage) === -1) {
+      offersAvatars.push(offerAvatarImage);
+    }
+  }
+
+  return offersAvatars;
+};
