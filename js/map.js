@@ -177,7 +177,7 @@ var getOfferParameters = function (offerQuantity) {
         checkout: OFFER_CHECKOUT_TIMES[getRandomIndex(OFFER_CHECKOUT_TIMES.length)],
         features: getOfferFeatures(),
         description: '',
-        photos: getOfferPhotos();
+        photos: getOfferPhotos()
       },
       location: {
         x: locationX,
@@ -188,3 +188,9 @@ var getOfferParameters = function (offerQuantity) {
 
   return offers;
 };
+
+var remvoeMapFade = function () {
+  map.classList.remove('map--faded');
+};
+
+remvoeMapFade();
