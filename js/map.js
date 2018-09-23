@@ -134,3 +134,22 @@ var getOfferFeatures = function () {
 
   return offerFeatures;
 };
+
+var getOfferPhotos = function () {
+  var offerPhotos = [];
+  var offerPhotoIndex;
+  var offerPhotoLink;
+
+  while (offerPhotos.length < OFFER_PHOTOS.length) {
+    offerPhotoIndex = getRandomIndex(OFFER_PHOTOS.length);
+    offerPhotoLink = OFFER_PHOTOS[offerPhotoIndex];
+
+    if (offerPhotos.indexOf(offerPhotoLink) === -1) {
+      offerPhotos.push(offerPhotoLink);
+    }
+  }
+
+  return offerPhotos;
+};
+
+console.log(getOfferPhotos());
