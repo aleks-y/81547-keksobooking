@@ -116,3 +116,21 @@ var getOffersTitles = function (offerQuantity) {
 
   return offersTitles;
 };
+
+var getOfferFeatures = function () {
+  var offerFeatures = [];
+  var featuresQuantity;
+  var offerFeature;
+
+  featuresQuantity = getRandomInt(1, OFFER_FEATURES.length);
+
+  while (offerFeatures.length < featuresQuantity) {
+    offerFeature = OFFER_FEATURES[getRandomIndex(OFFER_FEATURES.length)];
+
+    if (offerFeatures.indexOf(offerFeature) === -1) {
+      offerFeatures.push(offerFeature);
+    }
+  }
+
+  return offerFeatures;
+};
