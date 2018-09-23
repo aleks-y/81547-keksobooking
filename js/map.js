@@ -73,7 +73,7 @@ var getXRange = function () {
 
   return mapPinPositionXRange = {
     min: Math.round(mapPinMain.offsetWidth / 2),
-    max: Math.round(mapPinsContainer.offsetWidth + mapPinMain.offsetWidth / 2)
+    max: Math.round(mapPinsContainer.offsetWidth - mapPinMain.offsetWidth / 2)
   };
 };
 
@@ -194,3 +194,36 @@ var remvoeMapFade = function () {
 };
 
 remvoeMapFade();
+
+var renderMapPins = function (offers) {
+  var mapPins = [];
+  var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
+  for (var i = 0; i < offers.length; i++) {
+    var mapPin = mapPinTemplate.cloneNode(true);
+    mapPin.style.top = String(offers[i].location.y) + 'px';
+    mapPin.style.left = String(offers[i].location.x) + 'px';
+    mapPin.style.transform = 'translate(-50%, -100%)';
+    mapPin.querySelector('img').src = offers[i].author.avatar;
+    mapPin.setAttribute('alt', offers[i].offer.title);
+
+    mapPins.push(mapPin);
+  }
+
+  return mapPins;
+};
+
+var injectMapPinsToDOM = function (mapPins) {
+  var mapPinsList = document.querySelector('.map__pins');
+  var mapPinsContainer = document.createDocumentFragment();
+
+  for (var i = 0; i < mapPins.length; i++) {
+    mapPinsContainer.appendChild(mapPins[i]);
+  }
+
+  mapPinsList.appendChild(mapPinsContainer);
+};
+
+var offersParameters = getOfferParameters(OFFER_QUANTITY);
+var mapPins = renderMapPins(offersParameters);
+injectMapPinsToDOM(mapPins);
