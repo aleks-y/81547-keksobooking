@@ -152,4 +152,39 @@ var getOfferPhotos = function () {
   return offerPhotos;
 };
 
-console.log(getOfferPhotos());
+var getOfferParameters = function (offerQuantity) {
+  var offers = [];
+  var offerAvatars = getOffersAvatars(offerQuantity);
+  var offerTitles = getOffersTitles(offerQuantity);
+  var xRange = getXRange();
+
+  for (var i = 0; i < offerQuantity; i++) {
+    var locationX = getRandomInt(xRange.min, xRange.max);
+    var locationY = getRandomInt(MAP_PIN_POSITION_Y_RANGE.min, MAP_PIN_POSITION_Y_RANGE.max);
+
+    offers.push({
+      author: {
+        avatar: offerAvatars[i]
+      },
+      offer: {
+        title: offerTitles[i],
+        address: locationX + ', ' + locationY,
+        price: getRandomInt(OFFER_PRICES_RANGE.min, OFFER_PRICES_RANGE.max),
+        type: OFFER_TYPES[getRandomIndex(OFFER_TYPES.length)],
+        rooms: getRandomInt(OFFER_ROOMS_RANGE.min, OFFER_ROOMS_RANGE.max),
+        guests: getRandomInt(OFFER_GUESTS_RANGE.min, OFFER_GUESTS_RANGE.max),
+        checkin: OFFER_CHECKIN_TIMES[getRandomIndex(OFFER_CHECKIN_TIMES.length)],
+        checkout: OFFER_CHECKOUT_TIMES[getRandomIndex(OFFER_CHECKOUT_TIMES.length)],
+        features: getOfferFeatures(),
+        description: '',
+        photos: getOfferPhotos();
+      },
+      location: {
+        x: locationX,
+        y: locationY
+      }
+    });
+  }
+
+  return offers;
+};
