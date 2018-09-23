@@ -22,6 +22,11 @@ var OFFER_TYPES = [
   'house',
   'bungalo'
 ];
+var OFFER_TYPE_NAMES = {
+  flat: 'Квартира',
+  bungalo: 'Бунгало',
+  house: 'Дом'
+};
 var OFFER_TYPE_MIN_COST = {
   flat: 0,
   bungalo: 1000,
@@ -227,3 +232,53 @@ var injectMapPinsToDOM = function (mapPins) {
 var offersParameters = getOfferParameters(OFFER_QUANTITY);
 var mapPins = renderMapPins(offersParameters);
 injectMapPinsToDOM(mapPins);
+
+var renderMapCard = function (offers, offerNumber) {
+  var mapCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+  var mapCard = mapCardTemplate.cloneNode(true);
+
+  mapCard.querySelector('.popup__avatar').src = offers[offerNumber].author.avatar;
+  mapCard.querySelector('.popup__title').textContent = offers[offerNumber].offer.title;
+  mapCard.querySelector('.popup__text--address').textContent = offers[offerNumber].location.x + ', ' + offers[offerNumber].location.y;
+  mapCard.querySelector('.popup__text--price').textContent = offers[offerNumber].offer.price + ' \u20BD/ночь';
+  var mapCardType = mapCard.querySelector('.popup__type');
+  mapCardType.textContent = OFFER_TYPE_NAMES[offers[offerNumber].offer.type];
+  mapCard.querySelector('.popup__text--capacity').textContent = offers[offerNumber].offer.rooms + ' комнаты для ' + offers[offerNumber].offer.guests + ' гостей';
+  mapCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + offers[offerNumber].offer.checkin + ', выезд до ' + offers[offerNumber].offer.checkout;
+  var mapCardFeatures = mapCard.querySelector('.popup__features');
+  while (mapCardFeatures.firstChild) {
+    mapCardFeatures.removeChild(mapCardFeatures.firstChild);
+  }
+  for (var i = 0; i < offers[offerNumber].offer.features.length; i++) {
+    var feature = document.createElement('li');
+    feature.classList.add('feature', 'feature--' + offers[offerNumber].offer.features[i]);
+    mapCard.querySelector('.popup__features').appendChild(feature);
+  }
+  mapCard.querySelector('.popup__description').textContent = offers[offerNumber].offer.description;
+
+  var mapCardPhotosContainer = mapCard.querySelector('.popup__photos');
+  var mapCardPhotoTemplate = mapCard.querySelector('.popup__photo');
+
+  for (var i = 0; i < offers[offerNumber].offer.photos.length; i++) {
+    if (i === 0) {
+      mapCardPhotoTemplate.src = offers[offerNumber].offer.photos[i];
+    } else {
+      var mapCardPhoto = mapCardPhotoTemplate.cloneNode(true);
+      mapCardPhoto.src = offers[offerNumber].offer.photos[i];
+      mapCardPhotosContainer.appendChild(mapCardPhoto);
+    }
+  }
+
+  return mapCard;
+};
+
+var injectMapCardToDOM = function (mapCard) {
+  var map = document.querySelector('.map');
+  var mapFilter = document.querySelector('.map__filters-container');
+  var mapCardContainer = document.createDocumentFragment();
+  mapCardContainer.appendChild(mapCard);
+  map.insertBefore(mapCardContainer, mapFilter);
+};
+
+var mapCard = renderMapCard(offersParameters, MIN_OFFER_QUANTITY);
+injectMapCardToDOM(mapCard);
