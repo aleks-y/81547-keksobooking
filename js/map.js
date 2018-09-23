@@ -81,6 +81,10 @@ var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max + 1 - min)) + min;
 };
 
+var getRandomIndex = function (arrayLength) {
+  return Math.floor(Math.random() * arrayLength);
+};
+
 var getOffersAvatars = function (offerQuantity) {
   var offersAvatars = [];
   var offerAvatarIndex;
@@ -96,4 +100,19 @@ var getOffersAvatars = function (offerQuantity) {
   }
 
   return offersAvatars;
+};
+
+var getOffersTitles = function (offerQuantity) {
+  var offersTitles = [];
+  var offerTitle;
+
+  while (offersTitles.length < offerQuantity) {
+    offerTitle = OFFER_TITLES[getRandomIndex(OFFER_TITLES.length)];
+
+    if (offersTitles.indexOf(offerTitle) === -1) {
+      offersTitles.push(offerTitle);
+    }
+  }
+
+  return offersTitles;
 };
