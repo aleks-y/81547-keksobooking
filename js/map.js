@@ -27,12 +27,6 @@ var OFFER_TYPE_NAMES = {
   bungalo: 'Бунгало',
   house: 'Дом'
 };
-var OFFER_TYPE_MIN_COST = {
-  flat: 0,
-  bungalo: 1000,
-  house: 5000,
-  palace: 10000
-};
 var OFFER_ROOMS_RANGE = {
   min: 1,
   max: 5
@@ -70,16 +64,16 @@ var MAP_PIN_POSITION_Y_RANGE = {
 };
 
 var map = document.querySelector('.map');
-var mapPinsContainer = map.querySelector('.map__pins');
-var mapPinMain = mapPinsContainer.querySelector('.map__pin--main');
+var mapPinsList = map.querySelector('.map__pins');
+var mapPinMain = mapPinsList.querySelector('.map__pin--main');
 
 var getXRange = function () {
-  var mapPinPositionXRange = {};
-
-  return mapPinPositionXRange = {
+  var mapPinPositionXRange = {
     min: Math.round(mapPinMain.offsetWidth / 2),
-    max: Math.round(mapPinsContainer.offsetWidth - mapPinMain.offsetWidth / 2)
+    max: Math.round(mapPinsList.offsetWidth - mapPinMain.offsetWidth / 2)
   };
+
+  return mapPinPositionXRange;
 };
 
 var getRandomInt = function (min, max) {
@@ -219,7 +213,6 @@ var renderMapPins = function (offers) {
 };
 
 var injectMapPinsToDOM = function (mapPins) {
-  var mapPinsList = document.querySelector('.map__pins');
   var mapPinsContainer = document.createDocumentFragment();
 
   for (var i = 0; i < mapPins.length; i++) {
@@ -259,12 +252,12 @@ var renderMapCard = function (offers, offerNumber) {
   var mapCardPhotosContainer = mapCard.querySelector('.popup__photos');
   var mapCardPhotoTemplate = mapCard.querySelector('.popup__photo');
 
-  for (var i = 0; i < offers[offerNumber].offer.photos.length; i++) {
-    if (i === 0) {
-      mapCardPhotoTemplate.src = offers[offerNumber].offer.photos[i];
+  for (var j = 0; j < offers[offerNumber].offer.photos.length; j++) {
+    if (j === 0) {
+      mapCardPhotoTemplate.src = offers[offerNumber].offer.photos[j];
     } else {
       var mapCardPhoto = mapCardPhotoTemplate.cloneNode(true);
-      mapCardPhoto.src = offers[offerNumber].offer.photos[i];
+      mapCardPhoto.src = offers[offerNumber].offer.photos[j];
       mapCardPhotosContainer.appendChild(mapCardPhoto);
     }
   }
@@ -273,7 +266,6 @@ var renderMapCard = function (offers, offerNumber) {
 };
 
 var injectMapCardToDOM = function (mapCard) {
-  var map = document.querySelector('.map');
   var mapFilter = document.querySelector('.map__filters-container');
   var mapCardContainer = document.createDocumentFragment();
   mapCardContainer.appendChild(mapCard);
